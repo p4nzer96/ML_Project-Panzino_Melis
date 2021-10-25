@@ -1,0 +1,2 @@
+Kernel Used,Test Accuracy,FPR,FNR,Train Time,Train Time (s),Test Time,Test Time (s)
+rbf,97.15,3.26,1.28,"0 h, 16 m, 27 s",987.09,"0 h, 2 m, 30 s",150.65
