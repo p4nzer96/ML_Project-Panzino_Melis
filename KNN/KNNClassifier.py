@@ -1,13 +1,15 @@
+import sys
+
 import numpy as np
 from sklearn.metrics import confusion_matrix
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import accuracy_score
 
-import sys
 sys.path.insert(0, "C:\\Users\\andre\\Desktop\\ML Project - Panzino Melis\\")
 
 from utilities import compute_perf
 
+
+# Subclass of KNeighborsClassifier
 
 class KNNClassifier(KNeighborsClassifier):
 

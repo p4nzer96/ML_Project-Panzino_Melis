@@ -100,10 +100,10 @@ class SVM_PoisAttacker:
 
         solver_params = {
             'eta': 0.1,
-            'eta_min': 0.1,
+            'eta_min': 0.05,
             'eta_max': None,
-            'max_iter': 1000,
-            'eps': 1e-6
+            'max_iter': 100,
+            'eps': 1e-4
         }
 
         # Avviamo l'attacco di poisoning del classificatore SVM
@@ -145,6 +145,11 @@ class SVM_PoisAttacker:
         pois_acc = metric.performance_score(y_true=self.test_ds.Y, y_pred=pois_y_pred)
 
         print("Accuracy after attack on test set: {:.2%}".format(pois_acc))
+        
+        if test_no_pois:
+        
+            diff = (no_pois_acc - pois_acc)*100
+            print("Difference: {}".format(diff))
 
         if test_no_pois:
 

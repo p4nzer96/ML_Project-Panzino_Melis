@@ -16,7 +16,9 @@ from LoadDataset import LoadDataset
 # %%
 
 def train_NN():
-    # Path di Andrea dei dataset
+
+    # Dataset path
+
     ds_path = "C:\\Users\\andre\\Desktop\\ML Project - Panzino Melis\\Dataset\\"
 
     dataset_loader = LoadDataset(ds_path)
@@ -33,8 +35,6 @@ def train_NN():
     tr_losses = np.ndarray((n_folds, n_epochs))
     val_losses = np.ndarray((n_folds, n_epochs))
 
-    
-
     train_times = np.zeros(shape=n_folds, dtype=object)
     train_times_s = np.zeros(shape=n_folds)
 
@@ -49,7 +49,7 @@ def train_NN():
 
         start_time = time.time()
         tr_accuracies[fold, :], tr_losses[fold, :], val_accuracies[fold, :], val_losses[fold, :] = classifier.fit(
-            train_x, train_y, val_x, val_y, n_tr_epochs=n_epochs, model_name="NN_Model_f{}".format(fold))
+            train_x, train_y, val_x, val_y, n_tr_epochs=n_epochs, model_name="NN_Model_v3_f{}".format(fold))
         h, m, s, train_times_s[fold] = time_conversion(
             time.time() - start_time)
         train_times[fold] = "{} h, {} m, {} s".format(h, m, s)
@@ -97,10 +97,10 @@ def train_and_testNN():
 
     n_epochs = 100
 
-    classifier.fit(train_x, train_y, val_x, val_y, n_tr_epochs=n_epochs, model_name="NN_Model")
+    classifier.fit(train_x, train_y, val_x, val_y, n_tr_epochs=n_epochs, model_name="NN_Model_v3")
 
     start_time = time.time()
-    y_pred = classifier.predict(test_x, batch_size=4337, model_name="NN_Model.h5")
+    y_pred = classifier.predict(test_x, batch_size=4337, model_name="NN_Model_v3.h5")
     h, m, s, test_time_s = time_conversion(time.time() - start_time)
 
     acc, fpr, fnr = compute_perf(y_pred, test_y)
@@ -109,9 +109,10 @@ def train_and_testNN():
           "Ratio (FNR) [Malwares misclassified as Goodwares] {} % ".format(acc, fpr, fnr))
     print("Test Time: {}".format(test_time_s))
 
-    # %%
 
-    # RUNNING DELLO SCRIPT
+# %%
 
-    train_NN()
-    train_and_testNN()
+# RUNNING OF THE SCRIPT
+
+train_NN()
+train_and_testNN()

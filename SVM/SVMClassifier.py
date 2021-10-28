@@ -17,7 +17,7 @@ class SVMClassifier(SVC):
         tr_x = np.asarray(tr_x)
         tr_y = np.asarray(tr_y)
 
-        # Addestro il classificatore
+        # Training of the classifier
 
         super().fit(tr_x, tr_y)
 

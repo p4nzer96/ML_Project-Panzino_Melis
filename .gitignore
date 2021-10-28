@@ -14,3 +14,9 @@
 /SVM/SVM_Conf_Matrix.npy
 /SVM/SVM_predictions.npy
 /.idea/vcs.xml
+/Neural Network/NN_Model_v2.h5
+/Neural Network/NN_Model_v2_f0.h5
+/Neural Network/NN_Model_v2_f1.h5
+/Neural Network/NN_Model_v2_f2.h5
+/Neural Network/NN_Model_v2_f3.h5
+*.h5

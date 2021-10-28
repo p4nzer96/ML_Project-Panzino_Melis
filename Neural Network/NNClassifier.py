@@ -36,7 +36,7 @@ class NNClassifier:
 
         # Determino i parametri di addestramento
 
-        INPUT_SIZE = len(Training_Set)
+        INPUT_SIZE = Training_Set.shape[1]
         N_EPOCHS = n_tr_epochs
         BATCH_SIZE = batch_size
 
@@ -46,8 +46,7 @@ class NNClassifier:
 
         if self.model is None:
             self.model = Sequential()
-
-            self.model.add(Dense(units=INPUT_SIZE, activation='relu'))
+            self.model.add(Dense(units=2000, input_shape=(Training_Set.shape[1],), activation='relu'))
             self.model.add(Dropout(rate=0.2))
             self.model.add(Dense(units=100, activation='relu'))
             self.model.add(Dropout(rate=0.2))

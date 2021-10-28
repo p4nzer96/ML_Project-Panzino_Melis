@@ -3,7 +3,7 @@ from secml.data import CDataset
 from secml.array import CArray
 
 
-# Classe utilizzata per il caricamento del dataset come ndarray
+# Helper class for load a CDataset and convert into ndarray
 
 class LoadDataset:
 
@@ -46,7 +46,7 @@ class LoadDataset:
     def ts_y(self, value):
         self._ts_y = value
 
-    # Caricamento del dataset di training
+    # Loading of training dataset
 
     def load_training(self):
 
@@ -57,7 +57,7 @@ class LoadDataset:
 
         return self.tr_x, self.tr_y
 
-    # Caricamento del dataset di test
+    # Loading of test dataset
 
     def load_test(self):
 
@@ -68,7 +68,7 @@ class LoadDataset:
 
         return self.ts_x, self.ts_y
 
-    # Caricamento del dataset completo
+    # Loading of full dataset (join of training and test)
 
     def load_all(self):
 
@@ -81,34 +81,31 @@ class LoadDataset:
         self.tr_x = CArray.tondarray(train_dataset.X)
         self.tr_y = CArray.tondarray(train_dataset.Y)
 
-        print(self.tr_x.shape, self.ts_x.shape)
-        print(self.tr_y.shape, self.ts_y.shape)
-
         tot_dataset = np.vstack((self._tr_x, self._ts_x))
         tot_labels = np.concatenate((self._tr_y, self._ts_y))
 
         return tot_dataset, tot_labels
 
-    # Caricamento del dataset per k-fold
+    # Loading for k-fold cross validation
 
     def load_for_kfold(self, k_tot, curr_k):
 
-        # Carico il dataset di training
+        # Loading of training dataset
 
         self.load_training()
 
-        # Calcolo il numero (o lunghezza) di ogni fold
+        # Computing the length of each fold
 
         split_length = int(self.tr_x.shape[0] / k_tot)
 
-        # Creo gli arrey che conterranno il dataset di training e test per ogni fold
+        # Creating empty arrays
 
         train_dataset = np.empty((0, 2000), int)
         test_dataset = np.empty((0, 2000), int)
         train_labels = np.empty(0, int)
         test_labels = np.empty(0, int)
 
-        # Creo i dataset per ogni fold
+        # Creating the folds
 
         for i in range(k_tot):
 
@@ -122,7 +119,7 @@ class LoadDataset:
                 train_dataset = np.vstack((train_dataset, self.tr_x[i * split_length: (i + 1) * split_length, :]))
                 train_labels = np.hstack((train_labels, self.tr_y[i * split_length: (i + 1) * split_length]))
 
-        # Riassegno gli attributi di classe
+        # Reassignment of class attributes
 
         self.tr_x = train_dataset
         self.tr_y = train_labels
@@ -131,51 +128,4 @@ class LoadDataset:
 
         return self.tr_x, self.tr_y, self.ts_x, self.ts_y
 
-    # Funzione di test per verificare il funzionamento della k-fold 
-    # TODO: da rimuovere
 
-
-'''
-
-    def load_for_kfold_custom(self, tr_ds, tr_l, k_tot, curr_k):
-
-        # Carico il dataset di training
-            
-        self.tr_x = tr_ds
-        self.tr_y = tr_l
-
-        # Calcolo il numero (o lunghezza) di ogni fold
-
-        split_length = int(self.tr_x.shape[0] / k_tot)
-
-        # Creo gli arrey che conterranno il dataset di training e test per ogni fold
-
-        train_dataset = np.empty((0, 2000), int)
-        test_dataset = np.empty((0, 2000), int)
-        train_labels = np.empty(0, int)
-        test_labels = np.empty(0, int)
-
-        # Creo i dataset per ogni fold
-
-        for i in range(k_tot):
-
-            if i == curr_k:
-
-                test_dataset = np.vstack((test_dataset, self.tr_x[i * split_length: (i + 1) * split_length, :]))
-                test_labels = np.hstack((test_labels, self.tr_y[i * split_length: (i + 1) * split_length]))
-
-            else:
-
-                train_dataset = np.vstack((train_dataset, self.tr_x[i * split_length: (i + 1) * split_length, :]))
-                train_labels = np.hstack((train_labels, self.tr_y[i * split_length: (i + 1) * split_length]))
-
-        # Riassegno gli attributi di classe
-
-        self.tr_x = train_dataset
-        self.tr_y = train_labels
-        self.ts_x = test_dataset
-        self.ts_y = test_labels
-
-        return self.tr_x, self.tr_y, self.ts_x, self.ts_y
-    
-'''
